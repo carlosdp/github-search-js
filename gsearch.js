@@ -4,30 +4,49 @@ function searchGithubCode(input, callback) {
   }});
 }
 var response;
+var results
 function writeResults(jsonDump){
-  response = jsonDump
-  var container = $(".content-container");
+  results = jsonDump
+  var container = $(".main-content");
   var responses = jsonDump["total_count"] > 30 ? 30 :  jsonDump["total_count"];
-  var row = $("<div>").addClass("row");
-  var rowIndex = 0;
+//  var row = $("<div>").addClass("row");
+//  var rowIndex = 0;
   for(var i=0;i<responses;i++){
     response = jsonDump["items"][i]
-    var item = $("<div>").addClass("container span4");
-    if(rowIndex < 2){
-      rowIndex+=1;
-    } else {
-      container.append(row);
-      row = $("<div>").addClass("row");
-      rowIndex=0;
+    var item = $("<blockquote>").addClass("hero-unit");
+//  hero-unit replaces rows
+//    if(rowIndex < 2){
+//      rowIndex+=1;
+//    } else {
+//      container.append(row);
+//      row = $("<div>").addClass("row");
+//      rowIndex=0;
+//    }
+    var curseList = $("<div>");
+    for(var j = 0; j < response.text_matches.length;j++){
+      if(response.text_matches[j].fragment.length <= 140){ // tweet length seems appropriate
+        curseList.append($("<code>").text(response.text_matches[j].fragment).addClass('curse-code'));
+        curseList.append($("<br>"));
+      } else {
+        curseList.append($("<pre>").text(response.text_matches[j].fragment).addClass('curse-code'));
+        curseList.append($("<br>"));
+      }
     }
-    item.append($("<h4>").append(
-      $("<a>").text(response.repository.name)).attr('href',response.repository.url)
+    item.append(curseList);
+    item.append($("<cite>").append(
+      $("<a>").text(response.repository.name))
+              .attr('href',response.repository.url)
+              .attr('title','Source Title')
+    ).append(
+      $("<p>").text("by ").append(
+        $("<a>").text(response.repository.owner.login)
+          .attr('href',response.repository.owner.url)
+          .attr('title','Source Title')
+      )
     );
-    item.append($("<p>").text("by "+response.repository.owner.login));
     
-    row.append(item);
+    container.append(item);
   }
-  container.append(row);
 }
 
 // set onclick to do the search
