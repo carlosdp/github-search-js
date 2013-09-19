@@ -37,4 +37,23 @@ $(function(){
     $(".searchBox").val("");
     var jsonDump = searchGithubCode(searchQuery, writeResults);    
   }) ;
+
+  $(".aboutTab").on("click", function() {
+    var aboutInfo = $.get('about.txt', function(data) {
+      $('body').append("\
+        <div class='modal'>\
+          <div class='modal-header'>\
+            <button type='button' class='close'>&times;</button>\
+            <h3>About</h3>\
+            <div class='modal-body'>" + data + "\
+            </div>\
+          </div>\
+        </div>\
+      ");
+
+      $('.close').on("click", function() {
+        $('.modal').addClass("fade").remove();
+      });
+    });
+  });
 });
