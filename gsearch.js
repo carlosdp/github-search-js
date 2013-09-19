@@ -37,4 +37,10 @@ $(function(){
     $(".searchBox").val("");
     var jsonDump = searchGithubCode(searchQuery, writeResults);    
   }) ;
+
+  $(".aboutTab").on("click", function() {
+    var aboutInfo = $.get('about.txt', function(data) {
+      alert(data);
+    });
+  });
 });

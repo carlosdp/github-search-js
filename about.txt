@@ -1,0 +1,1 @@
+This is a mini-client project created for CMU 67-328. It was created by Carlos Diaz-Padron and Rien Flood and demonstrates the use of GitHub code search and their CORS enabled API. Just type in a query and hit the search button and you will get links to projects that contain code matching your query.
