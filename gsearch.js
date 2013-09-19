@@ -58,6 +58,14 @@ $(function(){
     var jsonDump = searchGithubCode(searchQuery, writeResults);    
   }) ;
 
+  $(".searchBox").keypress(function(e){
+    if(e.keyCode == 13){
+      $(".searchButton").click();
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  });
+
   $(".aboutTab").on("click", function() {
     var aboutInfo = $.get('about.txt', function(data) {
       $('body').append("\
